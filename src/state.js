@@ -6,7 +6,7 @@ export default observable({
   setNodeCount: action(function (count) {
     this.nodeCount = count
   }),
-  get data() {
+  get nodes() {
     return _.range(this.nodeCount).map(n => ({
       x: n, y: n + 2,
     }))
