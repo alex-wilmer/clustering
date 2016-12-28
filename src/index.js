@@ -63,6 +63,8 @@ let drawNodes = ({ state, ctx, t }) => {
 let draw = ({ t, canvas, ctx, state, theme }) => {
   canvas.width = canvas.width
 
+  state.setNodeCount(~~(Math.random() * 1000))
+
   let ox = canvas.width / 2
   let oy = canvas.height / 2
 
