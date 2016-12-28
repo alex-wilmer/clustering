@@ -26,29 +26,49 @@ let drawAxis = ({ ctx, ox, oy, theme }) => {
   ctx.stroke()
 }
 
-let drawCircle = ({ ctx, node }) => {
+let drawCircle = ({ ctx, node, t }) => {
   ctx.beginPath()
-  ctx.arc(node.x, node.y, 10, 0, Math.PI * 2)
-  ctx.stroke()
+  ctx.arc(node.x, node.y, 50 + (Math.sin(t / 100) * 20), 0, Math.PI * 2)
+  // ctx.fillStyle = `hsl(${t + node.x}, 50%, 70%)`
+  var x = Math.random() * 10
+  ctx.fillStyle = ~~x % 7 === 0
+    ? `white`
+    : ~~x % 14 === 0
+      ? `rgb(78, 190, 232)`
+      : ~~x % 21 === 0
+        ? `green`
+        : `purple`
+  ctx.fill()
+
+  ctx.beginPath()
+  ctx.arc(node.y, node.x, 50 + (Math.sin(t / 100) * 20), 0, Math.PI * 2)
+  // ctx.fillStyle = `hsl(${t + node.x}, 50%, 70%)`
+  var x = Math.random() * 10
+  ctx.fillStyle = ~~x % 6 === 0
+    ? `red`
+    : ~~x % 17 === 0
+      ? `rgb(232, 212, 78)`
+      : ~~x % 30 === 0
+        ? `greenrgb(227, 27, 27)`
+        : `purplergb(21, 30, 96)`
+  ctx.fill()
 }
 
-let drawNodes = ({ state, ctx }) => {
+let drawNodes = ({ state, ctx, t }) => {
   state.nodes.forEach(node => {
-    drawCircle({ ctx, node })
+    drawCircle({ ctx, node, t })
   })
 }
 
 let draw = ({ t, canvas, ctx, state, theme }) => {
-
-  state.setNodeCount(t % 1000)
-
   canvas.width = canvas.width
 
   let ox = canvas.width / 2
   let oy = canvas.height / 2
 
   drawAxis({ ctx, ox, oy, theme })
-  drawNodes({ state, ctx })
+  drawNodes({ state, ctx, t })
+
   requestAnimationFrame(t => draw({ t, canvas, ctx, state, theme }))
 }
 
